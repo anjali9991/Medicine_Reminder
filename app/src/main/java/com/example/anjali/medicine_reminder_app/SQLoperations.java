@@ -4,6 +4,7 @@ package com.example.anjali.medicine_reminder_app;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 public class SQLoperations {
     Context context;
     SQLiteDatabase db;
+    ArrayAdapter<list>adapter;
 
     SQLoperations(Context context) {
         this.context = context;
@@ -24,7 +26,6 @@ public class SQLoperations {
     void insert(String med_name, String date, String time) {
         db.execSQL("INSERT or replace INTO Medicine (task,date,time) VALUES('" + med_name + "','" + date + "','" + time + "')");
     }
-
     ArrayList<List> getdata() {
         Cursor c = db.rawQuery("SELECT * FROM Medicine", null);
         ArrayList<String> list = new ArrayList<>();

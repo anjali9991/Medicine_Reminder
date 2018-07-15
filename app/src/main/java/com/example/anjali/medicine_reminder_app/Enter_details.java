@@ -1,5 +1,4 @@
 package com.example.anjali.medicine_reminder_app;
-
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
@@ -8,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import java.util.Calendar;
+
 
 import android.content.IntentFilter;
 import android.os.SystemClock;
@@ -26,6 +26,7 @@ public class Enter_details extends AppCompatActivity implements View.OnClickList
     Button btnDatePicker, btnTimePicker, button;
     EditText txtDate, txtTime, med_name;
     private int mYear, mMonth, mDay, mHour, mMinute;
+    AlarmManager alarm_Manager;
     SQLoperations sqLoperations;
 
     @Override
@@ -43,7 +44,7 @@ public class Enter_details extends AppCompatActivity implements View.OnClickList
         View v;
         btnDatePicker.setOnClickListener(this);
         btnTimePicker.setOnClickListener(this);
-       
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,7 +53,7 @@ public class Enter_details extends AppCompatActivity implements View.OnClickList
                 intent.putExtra("med_name", med_name.getText().toString());
                 intent.putExtra("date", txtDate.getText().toString());
                 intent.putExtra("time", txtTime.getText().toString());
-
+                startAlert();
                 startActivity(intent);
                 finish();
             }
@@ -93,8 +94,22 @@ public class Enter_details extends AppCompatActivity implements View.OnClickList
                             txtTime.setText(hourOfDay + ":" + minute);
                         }
                     }, mHour, mMinute, false);
+
             timePickerDialog.show();
+
         }
+    }
+    public void startAlert() {
+
+        int i=mHour*3600000+mMinute*60000;
+        //int i = Integer.parseInt(mHour.getText().toString());
+        Intent intent = new Intent(this,AlarmReceive.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this.getApplicationContext(), 234324243, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
+                + (i), pendingIntent);
+        Toast.makeText(this, "Alarm is set",Toast.LENGTH_LONG).show();
     }
 }
 

@@ -4,16 +4,17 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
     final static private long ONE_SECOND = 1000;
     PendingIntent pi;
@@ -51,8 +52,11 @@ public class MainActivity extends AppCompatActivity {
         }
         else
         {
-            arrayAdapter = new ArrayAdapter<List>(MainActivity.this, android.R.layout.simple_list_item_1,arrayList);
+            //Myadapter myadapter = new Myadapter<>(MainActivity.this, android.R.layout.simple_list_item_1,arrayList);
+            //listView.setAdapter(myadapter);
+             arrayAdapter = new ArrayAdapter<List>(MainActivity.this, android.R.layout.simple_list_item_1,arrayList);
             listView.setAdapter(arrayAdapter);
         }
     }
 }
+
